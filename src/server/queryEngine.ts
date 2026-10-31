@@ -1,6 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import Groq from 'groq-sdk';
-import { getDatabase, getDataQualityReport } from './db.js';
+import { getDatabase, getDataQualityReport } from './db.ts';
 
 export interface QueryResult {
   question: string;
@@ -517,7 +517,7 @@ Rules for SQL generation:
     // Attempt Gemini if Groq wasn't used or had no key / failed / timed out
     if (!generatedSql && geminiKey) {
       try {
-        const ai = new GoogleGenAI();
+        const ai = new GoogleGenAI({ apiKey: geminiKey });
         const geminiPromise = ai.models.generateContent({
           model: 'gemini-3.8-flash',
           contents: `${systemPrompt}\n\nUser Question: ${userQuestion}\nGenerate SQL Query:`,

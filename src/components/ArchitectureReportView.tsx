@@ -1,7 +1,10 @@
-import React from 'react';
-import { Layers, ShieldCheck, Database, Cpu, Bot, CheckCircle, Terminal, HelpCircle, Wrench } from 'lucide-react';
+import React, { useState } from 'react';
+import { Layers, ShieldCheck, Database, Cpu, Bot, CheckCircle, Terminal, HelpCircle, Wrench, ZoomIn, X, Download, Sparkles } from 'lucide-react';
+import architectureDiagramImg from '../assets/images/architecture_diagram_1793434926143.jpg';
 
 export function ArchitectureReportView() {
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
+
   return (
     <div className="space-y-8 max-w-5xl mx-auto text-slate-300 text-sm">
       {/* Header Banner */}
@@ -18,11 +21,118 @@ export function ArchitectureReportView() {
         </p>
       </div>
 
-      {/* Visual Architecture Diagram */}
+      {/* Generated Architecture Blueprint Infographic */}
+      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <h3 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-sky-400" />
+            <span>1. End-to-End System Architecture Blueprint</span>
+          </h3>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <Sparkles className="w-3.5 h-3.5" /> High-Resolution Schematic
+            </span>
+            <button
+              onClick={() => setIsZoomOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+              title="Expand architecture diagram"
+            >
+              <ZoomIn className="w-3.5 h-3.5" />
+              <span>Inspect Fullscreen</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Image Showcase Card */}
+        <div className="relative group rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl">
+          <img
+            src={architectureDiagramImg}
+            alt="InsightPulse System Architecture Diagram"
+            className="w-full h-auto object-cover cursor-pointer transition-transform duration-300 group-hover:scale-[1.01]"
+            onClick={() => setIsZoomOpen(true)}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
+            <span className="text-xs text-sky-300 font-medium flex items-center gap-1.5">
+              <ZoomIn className="w-4 h-4" /> Click to enlarge architectural schematic
+            </span>
+          </div>
+        </div>
+
+        {/* Architecture Key Subsystems Pills */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+          <div className="bg-slate-950/70 border border-slate-800/80 rounded-xl p-3">
+            <div className="text-[10px] font-bold text-sky-400 uppercase tracking-widest mb-1">Frontend</div>
+            <div className="text-xs font-semibold text-white">React 19 Dashboard</div>
+            <div className="text-[11px] text-slate-400 mt-1">NL input, dynamic chart renderers, live KPI indicators</div>
+          </div>
+
+          <div className="bg-slate-950/70 border border-slate-800/80 rounded-xl p-3">
+            <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-1">Inference Engine</div>
+            <div className="text-xs font-semibold text-white">Gemini 3.8 & Groq LPU</div>
+            <div className="text-[11px] text-slate-400 mt-1">Prompt-to-SQL translation with deterministic verification</div>
+          </div>
+
+          <div className="bg-slate-950/70 border border-emerald-900/40 rounded-xl p-3">
+            <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Firewall</div>
+            <div className="text-xs font-semibold text-white">SQL AST Guardrail</div>
+            <div className="text-[11px] text-slate-400 mt-1">Strict SELECT/WITH firewall, injection defense & CTE resolver</div>
+          </div>
+
+          <div className="bg-slate-950/70 border border-slate-800/80 rounded-xl p-3">
+            <div className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-1">Data Layer</div>
+            <div className="text-xs font-semibold text-white">SQLite WASM (sql.js)</div>
+            <div className="text-[11px] text-slate-400 mt-1">In-memory zero-allocation DB with cleansed transaction table</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {isZoomOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4"
+          onClick={() => setIsZoomOpen(false)}
+        >
+          <div 
+            className="relative max-w-6xl w-full bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/70">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-5 h-5 text-sky-400" />
+                <h3 className="font-bold text-white text-base">InsightPulse Platform Architecture Diagram</h3>
+              </div>
+              <button
+                onClick={() => setIsZoomOpen(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 overflow-auto max-h-[80vh] flex items-center justify-center bg-slate-950">
+              <img
+                src={architectureDiagramImg}
+                alt="InsightPulse Architecture Detailed Schematic"
+                className="w-full h-auto rounded-lg shadow-inner"
+              />
+            </div>
+            <div className="px-6 py-3 border-t border-slate-800 bg-slate-950/70 flex items-center justify-between text-xs text-slate-400">
+              <span>Enterprise pipeline: React Client → AI Query Engine → SQL AST Firewall → SQLite In-Memory Database</span>
+              <button
+                onClick={() => setIsZoomOpen(false)}
+                className="px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-medium transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Visual Architecture Pipeline Steps */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm">
         <h3 className="text-base font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-          <Cpu className="w-5 h-5 text-sky-400" />
-          <span>1. System Architecture & Query Pipeline</span>
+          <Layers className="w-5 h-5 text-sky-400" />
+          <span>2. Pipeline Stage Breakdown</span>
         </h3>
 
         <div className="bg-slate-950 border border-slate-800 rounded-xl p-6 overflow-x-auto">
@@ -97,7 +207,7 @@ export function ArchitectureReportView() {
       <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm space-y-6">
         <h3 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
           <Bot className="w-5 h-5 text-indigo-400" />
-          <span>2. AI-Assisted Development Reflection Document</span>
+          <span>3. AI-Assisted Development Reflection Document</span>
         </h3>
 
         {/* Section A: AI Tools Used */}

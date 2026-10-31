@@ -1,5 +1,5 @@
-import { initDatabase, getDatabase, getDataQualityReport } from './db.js';
-import { processQuestion, validateSqlQuery } from './queryEngine.js';
+import { initDatabase, getDatabase, getDataQualityReport } from './db.ts';
+import { processQuestion, validateSqlQuery } from './queryEngine.ts';
 
 export interface TestCaseResult {
   id: string;
