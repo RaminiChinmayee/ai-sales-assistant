@@ -24,13 +24,27 @@ export default function App() {
 
   // Initial data loading
   useEffect(() => {
+    fetchConfig();
     fetchSummaryData();
     fetchRecords();
     runTestSuite();
-
-    // Run initial default query to populate Assistant immediately with Core Q1 using Groq
-    handleAskQuestion('What is the total revenue?', 'groq');
   }, []);
+
+  const fetchConfig = async () => {
+    try {
+      const res = await fetch('/api/config');
+      if (res.ok) {
+        const data = await res.json();
+        const prov = data.default_provider || 'groq';
+        setSelectedProvider(prov);
+        handleAskQuestion('What is the total revenue?', prov);
+        return;
+      }
+    } catch {
+      // Fallback
+    }
+    handleAskQuestion('What is the total revenue?', 'groq');
+  };
 
   const fetchSummaryData = async () => {
     try {

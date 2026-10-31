@@ -11,8 +11,17 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+function getPort(): number {
+  const portArgIdx = process.argv.indexOf('--port');
+  if (portArgIdx !== -1 && process.argv[portArgIdx + 1]) {
+    const p = parseInt(process.argv[portArgIdx + 1], 10);
+    if (!isNaN(p)) return p;
+  }
+  return 3000;
+}
+
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = getPort();
 
 app.use(express.json());
 
@@ -41,7 +50,7 @@ app.get('/api/config', (req, res) => {
   res.json({
     groq_available: Boolean(process.env.GROQ_API_KEY),
     gemini_available: Boolean(process.env.GEMINI_API_KEY),
-    default_provider: process.env.GROQ_API_KEY ? 'groq' : (process.env.GEMINI_API_KEY ? 'gemini' : 'groq'),
+    default_provider: 'groq',
   });
 });
 
@@ -229,9 +238,29 @@ async function startServer() {
     app.use(vite.middlewares);
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`InsightPulse Server active at http://0.0.0.0:${PORT}`);
   });
+
+  server.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${PORT} is already in use (EADDRINUSE).`);
+      process.exit(1);
+    } else {
+      console.error('❌ Server listen error:', err);
+      process.exit(1);
+    }
+  });
+
+  const shutdown = () => {
+    server.close(() => {
+      process.exit(0);
+    });
+    setTimeout(() => process.exit(0), 1000).unref();
+  };
+
+  process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
 }
 
 startServer();

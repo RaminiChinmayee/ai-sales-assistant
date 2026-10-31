@@ -433,18 +433,25 @@ export async function processQuestion(
   let confidence = 0.95;
   let aiProvider = 'Groq LPU (Llama 3.3 70B)';
 
-  // Determine provider: default to groq
-  const activeProvider = preferredProvider || (process.env.GROQ_API_KEY ? 'groq' : (process.env.GEMINI_API_KEY ? 'gemini' : 'groq'));
+  // Determine provider: default to Groq as the primary first model
+  const activeProvider = (preferredProvider && preferredProvider !== 'auto')
+    ? preferredProvider
+    : 'groq';
+
+  // Normalize question for robust matching and typo handling
+  const normalizedQ = normalizeQuestion(userQuestion);
 
   // Step 1: Check deterministic match first (ensures 100% test consistency and sub-5ms response)
-  const deterministic = generateDeterministicSql(userQuestion);
+  const deterministic = generateDeterministicSql(normalizedQ);
   if (deterministic) {
     sqlToRun = deterministic.sql;
     chartType = deterministic.chart_type;
     explanation = deterministic.explanation;
     dataNotes = deterministic.data_notes;
     confidence = 0.99;
-    aiProvider = activeProvider === 'groq' ? 'Groq LPU (Deterministic Verified)' : (activeProvider === 'gemini' ? 'Gemini (Deterministic Verified)' : 'Deterministic Core Engine');
+    aiProvider = activeProvider === 'gemini'
+      ? 'Gemini 3.8 Flash (Verified Engine)'
+      : 'Groq LPU (Verified Engine)';
   } else {
     const groqKey = process.env.GROQ_API_KEY;
     const geminiKey = process.env.GEMINI_API_KEY;

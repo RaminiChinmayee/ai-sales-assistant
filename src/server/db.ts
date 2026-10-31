@@ -100,7 +100,7 @@ export async function initDatabase(): Promise<{ db: Database; report: DataQualit
 
   // Path to CSV
   const possiblePaths = [
-    path.resolve(process.cwd(), 'public/assets/aistudio/ai_bi_assistant_sales_data_-_GET_0c4f5511.csv'),
+    path.resolve(process.cwd(), 'public/assets/sales_data.csv'),
     path.resolve(process.cwd(), 'sales_data.csv'),
   ];
 
