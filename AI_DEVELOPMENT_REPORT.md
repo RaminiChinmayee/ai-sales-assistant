@@ -5,7 +5,7 @@
 
 ---
 
-## 1. Which AI Tools You Used
+## 1. Which AI Tools Used
 
 1. **Groq LPU Inference (`groq-sdk` / Llama 3.3 70B Versatile):**
    - Employed in the Express backend for ultra-low latency (<100ms) text-to-SQL generation and natural language query interpretation.
@@ -17,7 +17,7 @@
 
 ---
 
-## 2. How You Used AI During Development
+## 2. How AI Used During Development
 
 We utilized AI across four key stages of the development lifecycle:
 
@@ -32,7 +32,7 @@ We utilized AI across four key stages of the development lifecycle:
 
 ---
 
-## 3. Problems You Encountered
+## 3. Problems Encountered
 
 During the build, four distinct technical and data problems were encountered:
 
@@ -47,7 +47,7 @@ During the build, four distinct technical and data problems were encountered:
 
 ---
 
-## 4. How You Debugged Them
+## 4. How Debugged
 
 1. **Standardized Ingestion Pipeline:**
    - Implemented `parseDateToISO()` in `src/server/db.ts` to convert `DD-MM-YYYY` into `YYYY-MM-DD`, and derived a dedicated `month_year` (`YYYY-MM`) column. This enabled exact chronological grouping and sorting.
@@ -60,7 +60,7 @@ During the build, four distinct technical and data problems were encountered:
 
 ---
 
-## 5. What You Would Improve With Another Day of Work
+## 5. What To Improve With Another Day of Work
 
 If granted an additional day of development, the following enhancements would be prioritized:
 

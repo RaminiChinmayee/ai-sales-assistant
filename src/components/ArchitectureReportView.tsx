@@ -213,10 +213,10 @@ export function ArchitectureReportView() {
         {/* Section A: AI Tools Used */}
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-sky-300">
-            A. Which AI Tools Were Used?
+            A. Which AI Tools Used
           </h4>
           <p className="leading-relaxed text-slate-300">
-            During the development of InsightPulse, we utilized:
+            During the development of InsightPulse, the following tools were utilized:
           </p>
           <ul className="list-disc list-inside space-y-1 text-slate-400 pl-2">
             <li>
@@ -234,7 +234,7 @@ export function ArchitectureReportView() {
         {/* Section B: How AI Was Used */}
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-sky-300">
-            B. How AI Was Used During Development
+            B. How AI Used During Development
           </h4>
           <p className="leading-relaxed text-slate-400">
             AI was utilized systematically across three core workflows:
@@ -291,7 +291,7 @@ export function ArchitectureReportView() {
         {/* Section D: How We Debugged Them */}
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-sky-300">
-            D. How Problems Were Debugged & Resolved
+            D. How Debugged
           </h4>
           <ul className="list-disc list-inside space-y-2 text-slate-400 pl-2">
             <li>
@@ -312,7 +312,7 @@ export function ArchitectureReportView() {
         {/* Section E: What Would Be Improved With Another Day */}
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-sky-300">
-            E. What Would Be Improved With Another Day of Work
+            E. What To Improve With Another Day of Work
           </h4>
           <ul className="list-disc list-inside space-y-2 text-slate-400 pl-2">
             <li>
